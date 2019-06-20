@@ -98,4 +98,4 @@ pause>nul
 # 修改后 脚本内容  
 goflyway.exe -up="http://jshome.xyz:80" -k="doubi233" -l=":8100"  
 pause>nul  
-# 记得把 go.doub.cf 替换为你的域名，端口号就是 Goflyway 服务端监听的端口，必须填写。  
+# 记得把 jshome.xyz 替换为你的域名，端口号就是 Goflyway 服务端监听的端口，必须填写。  
