@@ -60,4 +60,42 @@ WebSocket 连接模式
 HTTPS 前置代理  
 goflyway可以使用支持CONNECT命令的HTTPS代理服务器作为前置来连接服务端，HTTP和SOCKS5均支持此方法。假设代理服务器10.20.30.40:80，客户端使用以下命令连接：
   
--up="https://[username:password@]10.20.30.40:80/1.2.3.4:8100"  
+-up="https://[username:password@]10.20.30.40:80/1.2.3.4:8100"    
+
+
+# doubi安装教程
+# 先进入你的 Goflyway 服务端安装目录：  
+## 如果你是手动安装的，那么假设服务端安装在 /root 目录下：  
+cd /root/goflyway  
+   
+# 然后运行启动目录。  
+nohup ./goflyway -k="doubi233" -l=":80" -proxy-pass="http://kernel.ubuntu.com/~kernel-ppa/mainline/" > /tmp/goflyway.log 2>&1 &  
+# doubi233 是密码  
+# 80 是端口  
+# http://kernel.ubuntu.com/~kernel-ppa/mainline/ 是HTTP伪装的网站，必须是HTTP网站才行，这个网站就是我们平时更换内核开启BBR的 Ubuntu内核仓库。
+   
+# 因为要经过 Cloudflare CDN，所以端口有限制，只能使用以下端口之一：  
+80 8080 8880 2052 2082 2086 2095  
+停止  
+  
+kill -9 $(ps -ef|grep "goflyway"|grep -v grep|awk '{print $2}')  
+查看日志  
+  
+tail -f /tmp/goflyway.log  
+Goflyway 客户端配置  
+如果是使用 Goflyway Tools 客户端的请看：  
+运行 Goflyway Tools 客户端并添加账号，服务器IP处填写你的 Cloudflare CDN 配置的域名（端口和密码照常填写），然后选择 CDN 模式，再启动代理即可。
+  
+如果是手动教程客户端的请看：  
+客户端手动教程：https://doub.loan/goflyway-jc1/#客户端配置  
+  
+我们只需要修改一下客户端手动教程内写入的运 行脚本内容即可：  
+  
+# 原客户端教程 脚本内容  
+goflyway.exe -up="1.1.1.1:80" -k="doubi233" -l=":8100"  
+pause>nul  
+   
+# 修改后 脚本内容  
+goflyway.exe -up="http://jshome.xyz:80" -k="doubi233" -l=":8100"  
+pause>nul  
+# 记得把 go.doub.cf 替换为你的域名，端口号就是 Goflyway 服务端监听的端口，必须填写。  
